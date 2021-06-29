@@ -48,6 +48,8 @@ function updateFilters() {
     else {
         delete filters[filterID]
     }
+
+    console.log(filters);
  
   
     // 6. Call function to apply all filters and rebuild the table
@@ -63,11 +65,22 @@ function updateFilters() {
   
     // 9. Loop through all of the filters and keep any data that
     // matches the filter values
-      for (var i = 0; i < filters.length; i++) {
-          filteredData = filteredData.filter(row => row.filters[i] === filters[i].property("value");
-      }
-  
+    filterKeys = Object.keys(filters);
+    console.log(filterKeys);
+    console.log("number of filters:" + filterKeys.length);
+    console.log(filterKeys[0]);
+    if (filterKeys) {
+        for (var i = 0; i < filterKeys.length; i++) {
+            var currentKey = filterKeys[i];
+            console.log(currentKey);
+            let tableValue = d3.select("#" + currentKey).property("value");
+            console.log(tableValue);
+            filteredData = filteredData.filter(row => row[currentKey] === tableValue);
+        }
+    }
+      
     // 10. Finally, rebuild the table using the filtered data
+
     buildTable(filteredData);
     
   }
